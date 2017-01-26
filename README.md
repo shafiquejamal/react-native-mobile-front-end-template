@@ -14,6 +14,7 @@ git clone https://github.com/shafiquejamal/react-native-mobile-front-end-templat
 cd react-native-mobile-front-end-template
 rm -rf .git*
 rm README.md
+rm LICENSE
 find ./ -type f -print0 | xargs -0 sed -i 's/mobilefontendtemplate/mynewproject/g'
 cp i* /path/to/new-project-parent-directory/mynewproject/
 cp package.json /path/to/new-project-parent-directory/mynewproject/
