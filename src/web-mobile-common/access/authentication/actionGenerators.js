@@ -5,11 +5,7 @@ import {
   UPDATE_USERNAME_OR_EMAIL,
   LOGIN_USER,
   UPDATE_LOGIN_ERROR,
-  START_LOADING_RESET,
-  STOP_LOADING_RESET,
   LOGOUT_USER,
-  START_LOADING_CHANGE_PASSWORD,
-  STOP_LOADING_CHANGE_PASSWORD,
   PASSWORD_RESET_FAILED_UPDATE } from './types';
 import { postObject } from '../../socket/actionGenerators';
 
@@ -31,18 +27,6 @@ export const changePasswordThroughSocket = (currentPassword, newPassword) => {
     currentPassword,
     newPassword
   });
-};
-
-export const startLoadingChangePassword = () => {
-  return {
-    type: START_LOADING_CHANGE_PASSWORD
-  };
-};
-
-export const stopLoadingChangePassword = () => {
-  return {
-    type: STOP_LOADING_CHANGE_PASSWORD
-  };
 };
 
 export const logoutAllDevicesThroughSocket = () => {
@@ -107,18 +91,6 @@ export const updateLoginError = (value) => {
   return {
     type: UPDATE_LOGIN_ERROR,
     payload: value
-  };
-};
-
-export const startLoadingReset = () => {
-  return {
-    type: START_LOADING_RESET
-  };
-};
-
-export const stopLoadingReset = () => {
-  return {
-    type: STOP_LOADING_RESET
   };
 };
 

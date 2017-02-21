@@ -3,8 +3,6 @@ import { updateField } from '../../common/actionGenerators.js';
 import {
   UPDATE_CODE,
   UPDATE_ACTIVATION_ERROR,
-  START_LOADING_RESEND_ACTIVATION,
-  FINISH_LOADING_RESEND_ACTIVATION,
   UPDATE_EMAIL_AVAILABLE_ERROR_FOR_ACTIVATION
  } from './types';
 
@@ -29,10 +27,4 @@ export const resendActivationCodeThroughSocket = (email) => {
     messageType: 'toServerResendActivationCode',
     email
   });
-};
-
-export const startLoadingResendActivation = () => {
-  return {
-    type: START_LOADING_RESEND_ACTIVATION
-  };
 };

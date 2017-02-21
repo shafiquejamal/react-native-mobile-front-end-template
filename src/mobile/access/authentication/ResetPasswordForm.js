@@ -8,8 +8,6 @@ import {
   updateCode } from '../../../web-mobile-common/access/actionGenerators';
 import {
   resetPasswordThroughSocket,
-  startLoadingReset,
-  stopLoadingReset,
   updateResetCodeError } from '../../../web-mobile-common/access/authentication/actionGenerators';
 
 import {
@@ -58,7 +56,7 @@ class ResetPasswordForm extends Component {
   }
 
   renderResetPasswordButton() {
-    if (this.props.loadingReset) {
+    if (!this.props.isConnected) {
       return <Spinner size="large" />;
     }
 
@@ -133,15 +131,14 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ authentication }) => {
-  const { email, code, password, loadingReset, resetCodeError } = authentication;
-  return { email, code, password, loadingReset, resetCodeError };
+const mapStateToProps = ({ authentication, socket }) => {
+  const { isConnected } = socket;
+  const { email, code, password, resetCodeError } = authentication;
+  return { email, code, password, resetCodeError, isConnected };
 };
 
 export default connect(mapStateToProps, {
   updatePassword,
   updateCode,
   resetPasswordThroughSocket,
-  startLoadingReset,
-  stopLoadingReset,
   updateResetCodeError })(ResetPasswordForm);

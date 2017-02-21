@@ -83,7 +83,7 @@ class RegisterForm extends Component {
   }
 
   renderRegisterButton() {
-    if (this.props.loading) {
+    if (!this.props.isConnected) {
       return <Spinner size="large" />;
     }
 
@@ -174,10 +174,11 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ authentication, registration }) => {
-  const { username, email, password, loading } = authentication;
+const mapStateToProps = ({ authentication, registration, socket }) => {
+  const { isConnected } = socket;
+  const { username, email, password } = authentication;
   const { error, emailAvailableError, usernameAvailableError } = registration;
-  return { username, email, password, error, loading, emailAvailableError, usernameAvailableError };
+  return { username, email, password, error, emailAvailableError, usernameAvailableError };
 };
 
 export default connect(mapStateToProps, {

@@ -6,22 +6,15 @@ import {
   INVALID_CREDENTIALS,
   LOGIN_ERROR,
   UPDATE_LOGIN_ERROR,
-  START_LOADING_RESET,
-  STOP_LOADING_RESET,
   LOGOUT_USER,
   SOCKET_LOGGING_OUT,
-  START_LOADING_CHANGE_PASSWORD,
-  STOP_LOADING_CHANGE_PASSWORD,
   PASSWORD_RESET_FAILED_UPDATE,
   PASSWORD_CHANGE_FAILED } from './types';
 import {
   UPDATE_USERNAME,
   UPDATE_PASSWORD,
   UPDATE_EMAIL,
-  START_LOADING,
   UPDATE_CODE,
-  START_LOADING_PASSWORD_RESET,
-  STOP_LOADING_PASSWORD_RESET,
   PASSWORD_RESET_SUCCESSFUL } from '../types';
 
 const INITIAL_STATE = {
@@ -31,12 +24,7 @@ const INITIAL_STATE = {
   usernameOrEmail: '',
   password: '',
   user: null,
-  loading: false,
-  loadingResetPassword: false,
-  loadingReset: false,
-  loadingAllLogout: false,
   code: '',
-  loadingChangePassword: false,
   resetCodeError: '',
   passwordChangeError: ''
 };
@@ -49,40 +37,10 @@ export default (state = INITIAL_STATE, action) => {
     (typeof (action.payload) === 'string' &&
      validator.isEmail(action.payload)) ? '' : action.payload;
   switch (action.type) {
-    case START_LOADING_CHANGE_PASSWORD:
-      return {
-        ...state,
-        loadingChangePassword: true
-      };
-    case STOP_LOADING_CHANGE_PASSWORD:
-      return {
-        ...state,
-        loadingChangePassword: false
-      };
     case LOGOUT_USER:
       return INITIAL_STATE;
     case SOCKET_LOGGING_OUT:
       return INITIAL_STATE;
-    case STOP_LOADING_PASSWORD_RESET:
-      return {
-        ...state,
-        loadingResetPassword: false
-      };
-    case START_LOADING_RESET:
-      return {
-        ...state,
-        loadingReset: true
-      };
-    case STOP_LOADING_RESET:
-      return {
-        ...state,
-        loadingReset: false
-      };
-    case START_LOADING_PASSWORD_RESET:
-      return {
-        ...state,
-        loadingResetPassword: true
-      };
     case UPDATE_CODE:
       return {
         ...state,
@@ -93,11 +51,6 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         error: action.payload
       };
-    case START_LOADING:
-      return {
-        ...state,
-        loading: true
-      };
     case LOGIN_USER:
       return {
         ...INITIAL_STATE,
@@ -106,13 +59,11 @@ export default (state = INITIAL_STATE, action) => {
     case LOGIN_ERROR:
       return {
         ...state,
-        loading: false,
         error: action.payload
       };
     case INVALID_CREDENTIALS:
       return {
         ...state,
-        loading: false,
         error: action.payload
       };
     case UPDATE_USERNAME_OR_EMAIL:

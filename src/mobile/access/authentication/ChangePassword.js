@@ -12,9 +12,7 @@ import {
   logoutUser,
   changePassword,
   changePasswordThroughSocket,
-  logoutFromSocket,
-  startLoadingChangePassword,
-  stopLoadingChangePassword } from
+  logoutFromSocket } from
     '../../../web-mobile-common/access/authentication/actionGenerators';
 import { updatePassword } from '../../../web-mobile-common/access/actionGenerators';
 
@@ -52,7 +50,7 @@ class ChangePassword extends Component {
   }
 
   renderChangePasswordButton() {
-    if (this.props.loadingChangePassword) {
+    if (!this.props.isConnected) {
       return <Spinner size="large" />;
     }
 
@@ -125,9 +123,10 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ authentication }) => {
-  const { loadingChangePassword, password, user, passwordChangeError } = authentication;
-  return { loadingChangePassword, password, user, passwordChangeError };
+const mapStateToProps = ({ authentication, socket }) => {
+  const { isConnected } = socket;
+  const { password, user, passwordChangeError } = authentication;
+  return { password, user, passwordChangeError, isConnected };
 };
 
 export default connect(mapStateToProps, {
@@ -135,6 +134,4 @@ export default connect(mapStateToProps, {
   logoutFromSocket,
   updatePassword,
   changePassword,
-  changePasswordThroughSocket,
-  startLoadingChangePassword,
-  stopLoadingChangePassword })(ChangePassword);
+  changePasswordThroughSocket })(ChangePassword);

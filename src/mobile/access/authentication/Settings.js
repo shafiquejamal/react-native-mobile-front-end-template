@@ -38,7 +38,7 @@ class Settings extends Component {
   }
 
   renderLogoutAllDevicesButton() {
-    if (this.props.loadingAllLogout) {
+    if (!this.props.isConnected) {
       return <Spinner size="large" />;
     }
 
@@ -88,9 +88,10 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ authentication }) => {
-  const { loadingAllLogout, user } = authentication;
-  return { loadingAllLogout, user };
+const mapStateToProps = ({ authentication, socket }) => {
+  const { isConnected } = socket;
+  const { user } = authentication;
+  return { user };
 };
 
 export default connect(mapStateToProps, {

@@ -4,7 +4,7 @@ import { Text, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import validator from 'validator';
 
-import { updatePassword, startLoading } from '../../../web-mobile-common/access/actionGenerators';
+import { updatePassword } from '../../../web-mobile-common/access/actionGenerators';
 import {
   startLoggingInUser,
   updateUsernameOrEmail,
@@ -67,7 +67,7 @@ class LoginForm extends Component {
   }
 
   renderLoginButton() {
-    if (this.props.loading) {
+    if (!this.props.isConnected) {
       return <Spinner size="large" />;
     }
     return this.renderButton('Login', this.onLoginButtonPress.bind(this));
@@ -90,22 +90,9 @@ class LoginForm extends Component {
     );
   }
 
-  renderIsConnected() {
-    if (this.props.isConnected) {
-      return (
-        <Text>Connected</Text>
-        );
-    }
-
-    return (
-      <Text>Connecting</Text>
-      );
-  }
-
   render() {
     return (
       <View>
-       { this.renderIsConnected() }
       <Card>
         <CardSection>
           <Input
@@ -171,16 +158,15 @@ const styles = {
 };
 
 const mapStateToProps = ({ authentication, socket }) => {
-  const { usernameOrEmail, password, error, loading } = authentication;
+  const { usernameOrEmail, password, error } = authentication;
   const { isConnected } = socket;
-  return { usernameOrEmail, password, error, loading, isConnected };
+  return { usernameOrEmail, password, error, isConnected };
 };
 
 export default connect(mapStateToProps, {
   updateUsernameOrEmail,
   updatePassword,
   startLoggingInUser,
-  startLoading,
   updateLoginError,
   requestPasswordResetCodeThroughSocket,
   authenticateToSocket,

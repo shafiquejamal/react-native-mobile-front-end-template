@@ -93,7 +93,7 @@ class ActivateForm extends Component {
   }
 
   renderActivateButton() {
-    if (this.props.loading) {
+    if (!this.props.isConnected) {
       return <Spinner size="large" />;
     }
 
@@ -102,7 +102,7 @@ class ActivateForm extends Component {
 
 
   renderResendActivationCodeButton() {
-    if (this.props.loadingResendActivationCode) {
+    if (!this.props.isConnected) {
       return <Spinner size="large" />;
     }
 
@@ -185,10 +185,11 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ authentication, activation }) => {
+const mapStateToProps = ({ authentication, activation, socket }) => {
+  const { isConnected } = socket;
   const { email } = authentication;
-  const { loading, code, error, loadingResendActivationCode, emailAvailableError } = activation;
-  return { email, code, loading, error, loadingResendActivationCode, emailAvailableError };
+  const { code, error, emailAvailableError } = activation;
+  return { email, code, isConnected, error, emailAvailableError };
 };
 
 export default connect(mapStateToProps, {

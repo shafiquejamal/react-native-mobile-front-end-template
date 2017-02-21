@@ -2,10 +2,7 @@ import {
   UPDATE_EMAIL,
   UPDATE_PASSWORD,
   UPDATE_USERNAME,
-  START_LOADING,
-  UPDATE_CODE,
-  STOP_LOADING_PASSWORD_RESET,
-  START_LOADING_PASSWORD_RESET } from './types';
+  UPDATE_CODE } from './types';
 import { updateField } from '../common/actionGenerators.js';
 
 export const updateEmail =
@@ -19,21 +16,3 @@ export const updateCode =
 
 export const updateUsername =
   (username) => updateField(UPDATE_USERNAME, username);
-
-export const startLoading = () => {
-  return {
-    type: START_LOADING
-  };
-};
-
-export const startLoadingPasswordReset = () => {
-  return {
-    type: START_LOADING_PASSWORD_RESET
-  };
-};
-
-export const stopLoadingPasswordReset = () => {
-  return {
-    type: STOP_LOADING_PASSWORD_RESET
-  };
-};
