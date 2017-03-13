@@ -20,8 +20,6 @@ export const requestPasswordResetCodeThroughSocket = (email) => {
 };
 
 export const changePasswordThroughSocket = (currentPassword, newPassword) => {
-  console.log('currentPassword', currentPassword);
-  console.log('newPassword', newPassword);
   return postObject({
     messageType: 'toServerChangePassword',
     currentPassword,

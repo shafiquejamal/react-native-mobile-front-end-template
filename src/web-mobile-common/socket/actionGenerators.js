@@ -6,23 +6,12 @@ export const connectToSocket = () => {
   };
 };
 
-// const fetchContacts = () => {
-//   return postObject({
-//     messageType: 'toServerRequestContacts',
-//     md5ofContacts: '' });
-// };
-
 export const postObject = (obj) => {
   return {
       type: POST_OBJECT,
       obj
   };
 };
-
-export const startUpActions = [
-  // () => fetchContacts(),
-  // () => updateMessages()
-];
 
 export const setIsConnected = () => {
   return {
