@@ -1,4 +1,4 @@
-import { Actions } from 'react-native-router-flux';
+import { startUpActions } from '../../socket/actionGenerators.jsx';
 
 import {
   loginUser,
@@ -6,7 +6,6 @@ import {
   updateResetCodeError,
   logoutUser,
   logoutFromSocket } from './actionGenerators';
-
 
 import {
   LOGIN_SUCCESSFUL,
@@ -18,12 +17,13 @@ import {
   PASSWORD_RESET_FAILED,
   PASSWORD_CHANGE_SUCCESSFUL } from './types';
 
-export const authenticationListener = (store) => {
+export const authenticationListener = (store, redirects) => {
     const lastAction = store.getState().lastAction;
     switch (lastAction.type) {
       case LOGIN_SUCCESSFUL: {
         store.dispatch(loginUser(lastAction.payload));
-        Actions.domain();
+        startUpActions.forEach(action => store.dispatch(action()));
+        redirects.domain();
         break;
       }
       case LOGIN_FAILED: {
@@ -31,12 +31,12 @@ export const authenticationListener = (store) => {
         break;
       }
       case PASSWORD_RESET_CODE_SENT: {
-        Actions.resetPassword();
+        redirects.resetPassword();
         break;
       }
       case PASSWORD_RESET_SUCCESSFUL: {
         store.dispatch(updateResetCodeError(''));
-        Actions.login();
+        redirects.login();
         break;
       }
       case PASSWORD_RESET_FAILED: {
@@ -46,16 +46,16 @@ export const authenticationListener = (store) => {
       case PASSWORD_CHANGE_SUCCESSFUL: {
         store.dispatch(logoutUser());
         store.dispatch(logoutFromSocket());
-        Actions.authentication();
+        redirects.authentication();
         break;
       }
       case LOGOUT_USER: {
         store.dispatch(logoutFromSocket());
-        Actions.authentication();
+        redirects.authentication();
         break;
       }
       case SOCKET_LOGGING_OUT: {
-        Actions.authentication();
+        redirects.authentication();
         break;
       }
       default:

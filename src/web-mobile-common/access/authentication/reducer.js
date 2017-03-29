@@ -54,7 +54,9 @@ export default (state = INITIAL_STATE, action) => {
     case LOGIN_USER:
       return {
         ...INITIAL_STATE,
-        user: action.payload
+        user: action.payload,
+        username: action.payload.username,
+        email: action.payload.email
       };
     case LOGIN_ERROR:
       return {

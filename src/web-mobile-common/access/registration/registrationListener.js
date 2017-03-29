@@ -1,5 +1,3 @@
-import { Actions } from 'react-native-router-flux';
-
 import {
   EMAIL_IS_AVAILABLE,
   USERNAME_IS_AVAILABLE,
@@ -18,9 +16,8 @@ import {
   updateEmailIsAvailableErrorActivation,
   updateActivationError } from '../activation/actionGenerators';
 
-export const registrationListener = (store) => {
+export const registrationListener = (store, redirects) => {
     const lastAction = store.getState().lastAction;
-    console.log('registrationListener: action', lastAction);
     switch (lastAction.type) {
       case EMAIL_IS_AVAILABLE: {
         const errorMessageRegistration = lastAction.payload.available ? '' : 'Already registered';
@@ -35,7 +32,7 @@ export const registrationListener = (store) => {
         break;
       }
       case REGISTRATION_SUCCESSFUL: {
-        Actions.activation();
+        redirects.activateForm();
         break;
       }
       case REGISTRATION_FAILED: {
@@ -43,7 +40,7 @@ export const registrationListener = (store) => {
         break;
       }
       case ACCOUNT_ACTIVATION_SUCCESSFUL: {
-        Actions.authentication();
+        redirects.authentication();
         break;
       }
       case ACTIVATION_FAILED: {
@@ -56,6 +53,7 @@ export const registrationListener = (store) => {
       }
       case RESEND_ACTIVATION_CODE_RESULT: {
         store.dispatch(updateActivationError(lastAction.payload));
+        redirects.activateForm();
         break;
       }
       default:

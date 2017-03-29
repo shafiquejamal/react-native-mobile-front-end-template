@@ -24,3 +24,7 @@ export const setIsDisconnected = () => {
     type: IS_DISCONNECTED
   };
 };
+
+export const startUpActions = [
+  () => { }
+];

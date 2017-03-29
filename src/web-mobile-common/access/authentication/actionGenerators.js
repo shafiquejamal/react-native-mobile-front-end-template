@@ -6,11 +6,19 @@ import {
   LOGIN_USER,
   UPDATE_LOGIN_ERROR,
   LOGOUT_USER,
-  PASSWORD_RESET_FAILED_UPDATE } from './types';
+  PASSWORD_RESET_FAILED_UPDATE,
+  UPDATE_EMAIL,
+  UPDATE_USERNAME } from './types';
 import { postObject } from '../../socket/actionGenerators';
 
 export const updateUsernameOrEmail =
   (usernameOrEmail) => updateField(UPDATE_USERNAME_OR_EMAIL, usernameOrEmail);
+
+export const updateEmail =
+    (email) => updateField(UPDATE_EMAIL, email);
+
+export const updateUsername =
+    (email) => updateField(UPDATE_USERNAME, email);
 
 export const requestPasswordResetCodeThroughSocket = (email) => {
   return postObject({

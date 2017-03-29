@@ -10,7 +10,6 @@ const INITIAL_STATE = {
 };
 
 export default (state = INITIAL_STATE, action) => {
-  console.log('reg reducer', action);
   switch (action.type) {
     case UPDATE_REGISTRATION_ERROR:
       return {

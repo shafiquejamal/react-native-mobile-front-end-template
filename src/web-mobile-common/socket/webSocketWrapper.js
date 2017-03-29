@@ -1,16 +1,13 @@
 import ReconnectingWebSocket from 'reconnecting-websocket';
-import { Actions } from 'react-native-router-flux';
 
-import { WS_ROOT_URL } from '../../web-mobile-common/config/api';
 import * as ActionTypes from './types';
 import {
   startUpActions,
   setIsConnected,
-  setIsDisconnected,
-  authenticateToSocket } from './actionGenerators';
-import { logoutUser } from '../access/authentication/actionGenerators';
+  setIsDisconnected } from './actionGenerators';
+import { logoutUser, authenticateToSocket } from '../access/authentication/actionGenerators';
 
-export const webSocketWrapper = (store) => {
+export const webSocketWrapper = (store, redirects, WS_ROOT_URL) => {
   const wrapper = {
     webSocket: null,
     postObject(obj) {
@@ -35,7 +32,7 @@ export const webSocketWrapper = (store) => {
           startUpActions.forEach(action => store.dispatch(action()));
         } else {
           store.dispatch(logoutUser());
-          Actions.authentication();
+          redirects.authentication();
         }
       };
 
@@ -60,16 +57,15 @@ export const webSocketWrapper = (store) => {
     },
     wSListener: () => {
       const lastAction = store.getState().lastAction;
+      switch (lastAction.type) {
+        case ActionTypes.POST_OBJECT:
+          return wrapper.postObject(lastAction.obj);
 
-        switch (lastAction.type) {
-          case ActionTypes.POST_OBJECT:
-            return wrapper.postObject(lastAction.obj);
+        case ActionTypes.CONNECT:
+          return wrapper.startWS();
 
-          case ActionTypes.CONNECT:
-            return wrapper.startWS();
-
-          default:
-            return;
+        default:
+          return;
       }
     },
   };
